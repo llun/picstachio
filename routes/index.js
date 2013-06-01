@@ -5,8 +5,7 @@ var campaign = require('../models/campaign');
  */
 
 exports.index = function(req, res){
-  campaign.find({}, function (err, campaigns) {
-    console.log (campaigns);
+  campaign.find({}).sort('-createDate').exec(function (err, campaigns) {
     res.render('index', { campaigns: campaigns })
   });
 };

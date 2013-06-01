@@ -3,9 +3,32 @@ extends layout
 block content
   .container
     h3 Current Campaigns
-    .row
-      .span12
-        ul
-          - each campaign in campaigns
-            li
-              div= campaign.name
+    table.table.tabled-bordered
+      thread
+        tr
+          th Sample Images
+          th Campaign description
+          th Entries
+          th Ending
+          th Budget
+          th Client
+          th
+      tbody.row
+        - each campaign in campaigns
+          tr
+            td
+              if campaign.images[0]
+                = campaign.images[0]
+            td
+              = campaign.name
+              = campaign.description
+            td
+              // Entries
+            td
+              = campaign.endDate
+            td
+            td
+              = campaign.owner
+            td
+              a.btn.btn-block.btn-primary(href='/bid') Bid
+

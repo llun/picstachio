@@ -3,9 +3,10 @@ var database = require('./database'),
 
 var schema = mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   images: [],
   endDate: { type: Date },
+  createDate: { type: Date, default: Date.now },
   owner: { type: String, required: true }
 });
 

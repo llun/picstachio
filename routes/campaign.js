@@ -9,12 +9,19 @@ module.exports = {
 
   // API zone
   add: function (req, res) {
+
     var input = {
       name: req.body.name,
       description: req.body.description,
-      owner: req.user.id,
-      endDate: req.body.endDate
+      owner: req.user.id
     };
+
+    if (req.body.endDate) {
+      var endDateNumber = Date.parse(req.body.endDate);
+      if (!isNaN(endDateNumber)) {
+        input.endDate = new Date(endDateNumber);
+      }
+    }
 
     var campaign = new Campaign(input);
     campaign.save(function (err) {

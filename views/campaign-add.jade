@@ -7,7 +7,7 @@ block content
         h2 create a campaign
           form(action='/campaign/add',method='post')
             label Campaign Name
-            input(type='text',name='name', id='campaignname', style="campaignname",placeholder='Campaign Name')
+            input(type='text',name='name', id='name',placeholder='Campaign Name')
             label Description
             textarea(type='text',name='description',placeholder='Description', size='100')
             label Sample Photos
@@ -15,5 +15,5 @@ block content
             label End Date
             input(type='text',name='endDate',placeholder='End Date')
             p
-            button.btn.btn-primary(name='create_campaign')
+            button.btn.btn-primary(type='submit')
              | Create a campaign
