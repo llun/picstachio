@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .container
+    .span6.offset4
+      form.form-horizontal(action='/users/new',method='post')
+        .control-group
+          label.control-label(for='username') Username
+          .controls
+            input(type='text',name='username',id='username')
+        .control-group
+          label.control-label(for='password') Password
+          .controls
+            input(type='password',name='password',id='password')
+        .form-actions
+          button(type='submit') Register

@@ -69,6 +69,9 @@ app.post('/campaign/add', campaign.add);
 
 // User zone
 app.get('/users/login.html', user.loginPage);
+app.get('/users/register.html', user.registerPage);
+
+app.post('/users/register', user.register);
 
 // server codes
 app.listen(app.get('port'), function () {
