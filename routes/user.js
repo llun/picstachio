@@ -14,7 +14,6 @@ module.exports = {
     var user = new UserModel(req.body);
     user.save(function (err) {
       if (err) {
-        console.log (err);
         req.flash('error', err);
         res.redirect('/users/register.html');
       }
@@ -24,7 +23,7 @@ module.exports = {
     });
     res.redirect('/');
   },
-  
+
   logout: function (req, res) {
     req.logout();
     req.flash('info', 'Logout success');
