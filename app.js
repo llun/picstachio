@@ -6,6 +6,8 @@ var express = require('express'),
     campaign = require('./routes/campaign'),
     user = require('./routes/user');
 
+var security = require('./security');
+
 var UserModel = require('./models/user');
 
 var passport = require('passport'),
@@ -81,10 +83,10 @@ app.locals.title = 'Picstachio';
 app.get('/', routes.index);
 
 // Campaign zone
-app.get('/campaign/add.html', campaign.addPage);
+app.get('/campaign/add.html', security.requiredLogin, campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
 
-app.post('/campaign/add', campaign.add);
+app.post('/campaign/add', security.requiredLogin, campaign.add);
 
 // User zone
 app.get('/users/login.html', user.loginPage);
