@@ -24,7 +24,8 @@ module.exports = {
     var input = {
       name: req.body.name,
       description: req.body.description,
-      owner: req.user.id
+      owner: req.user.id,
+      budget: req.body.budget
     };
 
     if (req.body.endDate) {

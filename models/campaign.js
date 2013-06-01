@@ -4,6 +4,7 @@ var database = require('./database'),
 var schema = mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
+  budget: { type: Number },
   images: [],
   endDate: { type: Date },
   createDate: { type: Date, default: Date.now },
