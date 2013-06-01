@@ -1,6 +1,7 @@
 // All dependencies live here
 var express = require('express'),
     path = require('path'),
+    moment = require('moment'),
     less_middleware = require('less-middleware'),
     routes = require('./routes'),
     campaign = require('./routes/campaign'),
@@ -79,12 +80,14 @@ app.configure(function(){
 });
 
 app.locals.title = 'Picstachio';
+app.locals.moment = moment;
 
 app.get('/', routes.index);
 
 // Campaign zone
 app.get('/campaign/add.html', security.requiredLogin, campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
+app.get('/campaign/bid.html', security.requiredLogin, campaign.bidPage);
 
 app.post('/campaign/add', security.requiredLogin, campaign.add);
 

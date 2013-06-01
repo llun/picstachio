@@ -6,7 +6,7 @@ block content
     table.table.tabled-bordered
       thread
         tr
-          th Sample Images
+          th Sample Image
           th Campaign description
           th Entries
           th Ending
@@ -17,8 +17,8 @@ block content
         - each campaign in campaigns
           tr
             td
-              if campaign.images[0]
-                img(src=campaign.images[0])
+              if campaign.images.length > 0
+                img(src=campaign.images[0], width='150', height='150')
             td
               = campaign.name
               br
@@ -30,13 +30,18 @@ block content
               else
               |  0
             td
-              = campaign.endDate
+              if campaign.endDate
+                = moment(campaign.endDate).startOf('day').fromNow(true)
+              else
+                span.label.label-important
+                  |  ASAP
             td
               if campaign.budget
                 = campaign.budget
+                |  $
               else
                 | N/A
-              
+
             td
               = campaign.owner.username
             td

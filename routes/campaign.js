@@ -39,32 +39,45 @@ module.exports = {
       }
     }
 
-    var maps = _.map(req.files.files, function (file) {
-      return q.nfcall(client.putFile.bind(client),
-              file.path,
-              '/res/' +  (new Date().getTime()),
-              { 'x-amz-acl': 'public-read' });
-    });
-    q.all(maps)
-      .then(function (out) {
-        input.images = [];
-        _.each(out, function (v) {
-          input.images.push(v.req.url);
-        });
-        campaign = new Campaign(input);
-        return q.nfcall(campaign.save.bind(campaign));
-      })
-      .then(function () {
-        console.log ('Done');
-        res.status(302);
-        res.header('Location', '/');
-        res.json(campaign);
-      })
-      .fail(function (err) {
-        console.error (err);
-        res.json(err);
-      })
-      .done();
+    if (req.files.files.length > 0) {
+      var maps = _.map(req.files.files, function (file) {
+        return q.nfcall(client.putFile.bind(client),
+                file.path,
+                '/res/' +  (new Date().getTime()),
+                { 'x-amz-acl': 'public-read' });
+      });
+      q.all(maps)
+        .then(function (out) {
+          input.images = [];
+          _.each(out, function (v) {
+            input.images.push(v.req.url);
+          });
+          campaign = new Campaign(input);
+          return q.nfcall(campaign.save.bind(campaign));
+        })
+        .then(function () {
+          res.status(302);
+          res.header('Location', '/');
+          res.json(campaign);
+        })
+        .fail(function (err) {
+          res.json(err);
+        })
+        .done();
+    }
+    else {
+      campaign = new Campaign(input);
+      campaign.save(function (err) {
+        if (err) {
+          res.json(err);
+        }
+        else {
+          res.status(302);
+          res.header('Location', '/');
+          res.json(campaign);
+        }
+      });
+    }
 
   }
 
