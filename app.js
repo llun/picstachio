@@ -6,6 +6,8 @@ var express = require('express'),
     campaign = require('./routes/campaign'),
     user = require('./routes/user');
 
+var UserModel = require('./models/user');
+
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
@@ -14,7 +16,20 @@ var app = express();
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
+    UserModel.authenticate(username, password, function (err, user) {
+      return done(null, user, err);
+    });
   }));
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  UserModel.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 app.configure('development', function(){
   app.use(express.errorHandler());

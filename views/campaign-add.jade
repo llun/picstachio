@@ -5,12 +5,9 @@ block content
     .row
       .span8.offset2
         h2 create a campaign
-          form.form-horizontal(action='/campaign/add',method='post')
-            .control-group
-              label.control-label(for='campaignName') Campaign Name
-              .controls
-                input(type='text',name='campaignname', id='campaignname')
-
+          form(action='/campaign/add',method='post')
+            label Campaign Name
+            input(type='text',name='campaignname', id='campaignname', style="campaignname",placeholder='Campaign Name')
             label Description
             textarea(type='text',name='description',placeholder='Description', size='100')
             label Sample Photos
@@ -18,4 +15,6 @@ block content
             label End Date
             input(type='text',name='end_date',placeholder='End Date')
             p
-            button.btn.btn-primary(type='submit', name='create_campaign') Create a campaign
+            button.btn.btn-primary(name='create_campaign')
+             | Create a campaign
+            p
