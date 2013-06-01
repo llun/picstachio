@@ -12,9 +12,13 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
 var flash = require('connect-flash');
+var MongoStore = require('connect-mongo')(express);
 var app = express();
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password'
+  },
   function (username, password, done) {
     UserModel.authenticate(username, password, function (err, user) {
       return done(null, user, err);
@@ -53,7 +57,22 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser('randomcookie'));
+
+  app.use(express.session({
+    secret: 'cookiessecret',
+    store: new MongoStore({
+      url: process.env.MONGO_URL || 'mongodb://picstachio:1picstachio;@ds027618.mongolab.com:27618/picstachio'
+    })
+  }));
   app.use(flash());
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    res.locals.flash = req.flash();
+    next();
+  });
+
   app.use(app.router);
 });
 
@@ -71,7 +90,12 @@ app.post('/campaign/add', campaign.add);
 app.get('/users/login.html', user.loginPage);
 app.get('/users/register.html', user.registerPage);
 
-app.post('/users/register', user.register);
+app.post('/users/login', passport.authenticate('local',
+  { successRedirect: '/',
+    failureRedirect: '/users/login.html',
+    failureFlash: true }));
+app.get('/users/logout', user.logout);
+app.post('/users/new', user.register);
 
 // server codes
 app.listen(app.get('port'), function () {

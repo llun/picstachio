@@ -7,10 +7,26 @@ html
     link(rel='stylesheet', href='/css/flat-ui.css')
     link(rel='stylesheet', href='/css/picstachio.css')
   body
-    .navbar.navbar-fixed-top
+    .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
-          a.brand(href='#') Picstachio
-          
+          button.btn.btn-navbar(type='button',data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+            
+          a.brand(href='#')
+            img(src='http://placehold.it/190x60m')
+          div.nav-collapse.collapse
+            ul.nav
+              li.native
+                a(href='index.html')
+                |  Post a campaign
+              li
+                a(href='getting-started.html')
+                | Sign up
+              li
+                a(href='login')
+                | Login
     block content
 
