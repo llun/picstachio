@@ -9,6 +9,7 @@ module.exports = {
 
   // API zone
   add: function (req, res) {
+    console.log (req.body);
     var campaign = new Campaign(req.body);
     campaign.save(function (err) {
       if (err) {
