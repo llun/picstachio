@@ -4,4 +4,7 @@ block content
   .container
     .row
       .span12
-        a(href='/campaign/add.html') Add Campaign
+        ul
+          - each campaign in campaigns
+            li
+              div= campaign.name

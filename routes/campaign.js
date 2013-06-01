@@ -9,10 +9,14 @@ module.exports = {
 
   // API zone
   add: function (req, res) {
-    var input = req.body;
-    input.owner = req.user.id;
+    var input = {
+      name: req.body.name,
+      description: req.body.description,
+      owner: req.user.id,
+      endDate: req.body.endDate
+    };
 
-    var campaign = new Campaign(req.body);
+    var campaign = new Campaign(input);
     campaign.save(function (err) {
       if (err) {
         res.json(err);
