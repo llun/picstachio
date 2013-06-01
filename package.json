@@ -7,6 +7,7 @@
     , "connect-mongo": "0.2.x"
     , "express": "3.0.3"
     , "jade": ">= 0.0.1"
+    , "knox": "0.8.x"
     , "less-middleware": "0.1.x"
     , "mongoose": "3.5.x"
     , "passport": "0.1.x"
