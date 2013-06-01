@@ -18,9 +18,11 @@ block content
           tr
             td
               if campaign.images.length > 0
-                img(src=campaign.images[0], width='150', height='150')
+                a(href='/campaign/' + campaign._id + '.html')
+                  img(src=campaign.images[0], width='150', height='150')
             td
-              = campaign.name
+              a(href='/campaign/' + campaign._id + '.html')
+                = campaign.name
               br
               small
                 = campaign.description

@@ -19,6 +19,23 @@ module.exports = {
     res.render('campaign-add', { page: 'new-campaign' });
   },
 
+  campaignPage: function (req, res) {
+    var _campaign = null;
+    var _bids = null;
+    q.nfcall(Campaign.findById.bind(Campaign), req.params.campaign)
+      .then(function (campaign) {
+        _campaign = campaign;
+        return q.nfcall(Bid.find.bind(Bid), { campaign: req.params.campaign });
+      })
+      .then(function (bids) {
+        _bids = bids;
+        res.render('campaign-info', { campaign: _campaign, bids: _bids });
+      })
+      .fail(function (err) {
+        res.redirect('/');
+      });
+  },
+
   bidPage: function (req, res) {
     var id = req.params.id;
     Campaign.findById(id, function (err, campaign) {
@@ -30,7 +47,7 @@ module.exports = {
       }
     });
   },
-  
+
   bidCompletePage: function (req, res) {
     var _campaign = null;
     var _bid = null;
@@ -109,8 +126,8 @@ module.exports = {
       });
     }
   },
-  
-  bid: function (req, res) {    
+
+  bid: function (req, res) {
     var input = {
       campaign: req.params.id,
       owner: req.user._id,
@@ -118,7 +135,7 @@ module.exports = {
       images: []
     }
     var bid = null;
-    
+
     if (req.files.pictures.length > 0) {
       var maps = _.map(req.files.pictures, function (file) {
         var hash = crypto.createHash('sha1');
@@ -139,8 +156,9 @@ module.exports = {
           return q.nfcall(bid.save.bind(bid));
         })
         .then(function () {
+          req.flash('info', 'You have placed 1 bid on this campaign. If you bid is accepted you will receive a notification.');
           res.status(302);
-          res.header('Location', '/campaign/' + req.params.id + '/bid/' + bid._id + '.html');
+          res.header('Location', '/campaign/' + req.params.id + '/bid.html');
           res.json(bid);
         })
         .fail(function (err) {

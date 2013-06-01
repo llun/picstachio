@@ -4,6 +4,12 @@ block content
   .container
     .page-header
       h3 Submit a bid
+    if flash.info
+      .row
+        .span12
+          div.alert.alert-success
+            = flash.info
+            button.close.fui-cross(data-dismisss='alert')
     .row
       .span6
         h5
@@ -15,7 +21,7 @@ block content
         if images.length > 0
           img(src=images[0], width='150', height='150')
         p
-          |  Deadline: 
+          |  Deadline:
           if endDate
             = moment(endDate).startOf('day').fromNow(true)
           else
@@ -28,7 +34,7 @@ block content
             |  $
           else
             | N/A
-            
+
       .span6
         h5 Submit your photo
         form(action='/campaign/#{_id}/bid',method='post',enctype='multipart/form-data')
@@ -39,4 +45,4 @@ block content
           p
           button.btn.btn-success(type='submit') Submit your bid
             i.fui-arrow-right.pull-right
-            
+

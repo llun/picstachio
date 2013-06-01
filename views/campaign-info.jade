@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .container
+    .row
+      .span12
+        div= campaign.name
+    .row
+      .span12
+        ul
+          - each bid in bids
+            li= bid.price
