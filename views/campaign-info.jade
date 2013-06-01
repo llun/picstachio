@@ -2,11 +2,52 @@ extends layout
 
 block content
   .container
+    .page-header
+      h3 Your campaigns
     .row
-      .span12
-        div= campaign.name
-    .row
-      .span12
-        ul
-          - each bid in bids
-            li= bid.price
+      .span6
+        h5
+          = campaign.name
+        small
+          = campaign.description
+        p
+          |  Sample photo
+        if campaign.images.length > 0
+          img(src=campaign.images[0], width='150', height='150')
+        p
+          |  Deadline:
+          if endDate
+            = moment(campaign.endDate).startOf('day').fromNow(true)
+          else
+            span.label.label-important
+              |  ASAP
+        p
+          |  Budget:
+          if campaign.budget
+            = campaign.budget
+            |  $
+          else
+            | N/A
+
+      .span3
+        h5
+          if bids.length > 0
+            bids.length
+            |  Bids
+          else
+            |  No bids
+        - each bid in bids
+          #bidsphoto
+            if bid.images.length > 0
+              img(src=bid.images[0], width='200', height='200')
+            p
+              |  By:
+              = bid.owner.username
+            p
+              |  Price:
+              = bid.price
+            p
+              a.btn.btn-large.btn-success.btn-block
+                |  Buy
+                i.full-arrow-right.pull-right
+

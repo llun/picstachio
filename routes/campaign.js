@@ -10,7 +10,8 @@ var client = knox.createClient({
   });
 
 var Bid = require('../models/bid'),
-    Campaign = require('../models/campaign');
+    Campaign = require('../models/campaign'),
+    User = require('../models/user');
 
 module.exports = {
 
@@ -29,7 +30,19 @@ module.exports = {
       })
       .then(function (bids) {
         _bids = bids;
-        res.render('campaign-info', { campaign: _campaign, bids: _bids });
+        var map = _.map(_bids, function (bid) { return q.nfcall(User.findById.bind(User), bid.owner); })
+        return q.all(map);
+
+      })
+      .then(function (users) {
+        var bidOuts = [];
+        _.each(users, function (user, index) {
+          var bidOut = _bids[index].toObject();
+          bidOut.owner = user.toObject();
+          bidOuts.push(bidOut);
+        });
+        console.log (_bids);
+        res.render('campaign-info', { campaign: _campaign.toObject(), bids: bidOuts });
       })
       .fail(function (err) {
         res.redirect('/');
@@ -164,7 +177,10 @@ module.exports = {
           res.json(bid);
         })
         .fail(function (err) {
-          res.json(err);
+          req.flash('error', err.message);
+          res.status(302);
+          res.header('Location', '/campaign/' + req.params.id + '/bid.html');
+          res.json(bid);
         })
         .done();
     }

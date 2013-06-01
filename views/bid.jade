@@ -10,6 +10,12 @@ block content
           div.alert.alert-success
             = flash.info
             button.close.fui-cross(data-dismisss='alert')
+    if flash.error
+      .row
+        .span12
+          div.alert.alert-danger
+            = flash.info
+            button.close.fui-cross(data-dismisss='alert')
     .row
       .span6
         h5
