@@ -12,12 +12,31 @@ block content
           = description
         p
           |  Sample photo
-          if images.length > 0
-            img(src=images[0], width='150', height='150')
+        if images.length > 0
+          img(src=images[0], width='150', height='150')
+        p
+          |  Deadline: 
+          if endDate
+            = moment(endDate).startOf('day').fromNow(true)
+          else
+            span.label.label-important
+              |  ASAP
+        p
+          |  Budget:
+          if budget
+            = budget
+            |  $
+          else
+            | N/A
             
       .span6
-        h2 submit bid
+        h5 Submit your photo
         form(action='/campaign/#{_id}/bid',method='post',enctype='multipart/form-data')
           input(type='file',name='pictures[]')
-          input(type='text',name='price')
-          button.btn.btn-success(type='submit') Bid
+          p
+            |  Price:
+          input(type='text',name='price',placeholder='0.00$')
+          p
+          button.btn.btn-success(type='submit') Submit your bid
+            i.fui-arrow-right.pull-right
+            

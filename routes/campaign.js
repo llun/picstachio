@@ -30,6 +30,23 @@ module.exports = {
       }
     });
   },
+  
+  bidCompletePage: function (req, res) {
+    var _campaign = null;
+    var _bid = null;
+    q.nfcall(Campaign.findById.bind(Campaign), req.params.campaign)
+      .then(function (campaign) {
+        _campaign = campaign;
+        return q.nfcall(Bid.findById.bind(Bid), req.params.bid);
+      })
+      .then(function (bid) {
+        _bid = bid;
+        res.render('bid-complete', { campaign: _campaign, bid: _bid });
+      })
+      .fail(function (err) {
+        res.redirect('/');
+      });
+  },
 
   // API zone
   add: function (req, res) {
@@ -123,7 +140,7 @@ module.exports = {
         })
         .then(function () {
           res.status(302);
-          res.header('Location', '/');
+          res.header('Location', '/campaign/' + req.params.id + '/bid/' + bid._id + '.html');
           res.json(bid);
         })
         .fail(function (err) {

@@ -88,6 +88,7 @@ app.get('/', routes.index);
 app.get('/campaign/add.html', security.requiredLogin, campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
 app.get('/campaign/:id/bid.html', security.requiredLogin, campaign.bidPage);
+app.get('/campaign/:campaign/bid/:bid.html', security.requiredLogin, campaign.bidCompletePage);
 
 app.post('/campaign/add', security.requiredLogin, campaign.add);
 app.post('/campaign/:id/bid', security.requiredLogin, campaign.bid);
