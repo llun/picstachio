@@ -17,6 +17,10 @@ module.exports = {
     res.render('campaign-add', { page: 'new-campaign' });
   },
 
+  bidPage: function (req, res) {
+    res.render('bid');
+  },
+
   // API zone
   add: function (req, res) {
 
@@ -38,7 +42,7 @@ module.exports = {
     var maps = _.map(req.files.files, function (file) {
       return q.nfcall(client.putFile.bind(client),
               file.path,
-              '/res/' +  (new Date().getTime()) + '/' + file.name,
+              '/res/' +  (new Date().getTime()),
               { 'x-amz-acl': 'public-read' });
     });
     q.all(maps)

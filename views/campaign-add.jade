@@ -2,33 +2,29 @@ extends layout
 
 block content
   .container
-    .row
-
-      h3 Create a Campaign
-
-
-      form.form-horizontal(action='/campaign/add',method='post',enctype='multipart/form-data')
-        div.control-group
-          label.control-label Campaign name
-          div.controls
-            input(type='text',name='name', id='name',placeholder='Campaign Name')
-        div.control-group
-          label.control-label Campaign description
-          div.controls
-            textarea(type='text',name='description',placeholder='Description', size='100')
-        div.control-group
-          label.control-label Upload sample photos
-          div.controls
-            input(type='file',name='files[]',placeholder='File')
-        div.control-group
-          label.control-label Deadline
-          div.controls
-            input(type='text',name='endDate',placeholder='End Date')
-        div.control-group
-          label.control-label Budget
-          div.controls
-            input(type='text',name='budget',placeholder='Budget')
-        div.control-group
-          div.controls
-            button.btn.btn-success(type='submit')
-              | Create a campaign
+    h3 Create a Campaign
+    form.form-horizontal(action='/campaign/add',method='post',enctype='multipart/form-data')
+      div.control-group
+        label.control-label Campaign name
+        div.controls
+          input(type='text',name='name', id='name',placeholder='Campaign Name')
+      div.control-group
+        label.control-label Campaign description
+        div.controls
+          textarea(type='text',name='description',placeholder='Description', size='100')
+      div.control-group
+        label.control-label Upload sample photos
+        div.controls
+          input(type='file',name='files[]',placeholder='File')
+      div.control-group
+        label.control-label Deadline
+        div.controls
+          input(type='text',name='endDate',placeholder='End Date')
+      div.control-group
+        label.control-label Budget
+        div.controls
+          input(type='text',name='budget',placeholder='Budget')
+      div.control-group
+        div.controls
+          button.btn.btn-success(type='submit')
+            | Create a campaign

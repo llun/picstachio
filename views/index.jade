@@ -18,17 +18,27 @@ block content
           tr
             td
               if campaign.images[0]
-                = campaign.images[0]
+                img(src=campaign.images[0])
             td
               = campaign.name
-              = campaign.description
+              br
+              small
+                = campaign.description
             td
-              // Entries
+              if campaign.bid
+                = campaign.bid
+              else
+              |  0
             td
               = campaign.endDate
             td
+              if campaign.budget
+                = campaign.budget
+              else
+                | N/A
+              
             td
-              = campaign.owner
+              = campaign.owner.username
             td
               a.btn.btn-block.btn-success(href='/bid') Bid
 
