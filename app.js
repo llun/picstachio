@@ -12,6 +12,18 @@ var express = require('express')
 
 var app = express();
 
+app.configure('development', function(){
+  app.use(express.errorHandler());
+  app.use(less_middleware({
+    src: __dirname + '/public',
+    force: true
+  }));
+ });
+
+app.configure('production', function() {
+  app.use(less_middleware({src: __dirname + '/public'}));
+});
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -27,8 +39,12 @@ app.configure(function(){
 });
 
 app.get('/', routes.index);
+
+// Campaign zone
 app.get('/campaign/add.html', campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
+
+app.post('/campaign/add', campaign.add);
 
 // server codes
 app.listen(app.get('port'), function () {
