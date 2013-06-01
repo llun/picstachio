@@ -1,8 +1,12 @@
+var campaign = require('../models/campaign');
 
 /*
  * GET home page.
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' })
+  campaign.find({}, function (err, campaigns) {
+    console.log (campaigns);
+    res.render('index', { title: 'Express' })
+  });
 };

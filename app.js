@@ -2,28 +2,15 @@
 var express = require('express'),
     path = require('path'),
     less_middleware = require('less-middleware'),
-    routes = require('./routes');
+    routes = require('./routes'),
+    campaign = require('./routes/campaign');
 
 var flash = require('connect-flash');
 
-var app = express();
+var express = require('express')
+  , routes = require('./routes');
 
-// passport and security session
-var cookieSecret = 'tUjurat6';
-
-// express.js configuration
-
-app.configure('development', function(){
-  app.use(express.errorHandler());
-  app.use(less_middleware({
-    src: __dirname + '/public',
-    force: true
-  }));
-});
-
-app.configure('production', function() {
-  app.use(less_middleware({src: __dirname + '/public'}));
-});
+var app = module.exports = express.createServer();
 
 
 app.configure(function(){
@@ -35,12 +22,14 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser(cookieSecret));
+  app.use(express.cookieParser('randomcookie'));
   app.use(flash());
   app.use(app.router);
 });
 
 app.get('/', routes.index);
+app.get('/campaign/add.html', campaign.addPage);
+app.get('/campaign/list.html', campaign.listPage);
 
 // server codes
 app.listen(app.get('port'), function () {

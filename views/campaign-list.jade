@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h2 campign list
+  input(type='text',name='name',placeholder='Name')
+  textarea(type='text',name='description',placeholder='Description')
+  input(type='file',name='files[]',placeholder='File')
+  input(type='text',name='end_date',placeholder='End Date')
+  input(type='submit',name='create_campaign',placeholder='Create a campaign')
