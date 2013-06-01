@@ -83,8 +83,9 @@ module.exports = {
       }
     }
 
-    if (req.files.files.length > 0) {
-      var maps = _.map(req.files.files, function (file) {
+    var files = _.filter(req.files.files, function (file) { return file.size > 0; })
+    if (files.length > 0) {
+      var maps = _.map(files, function (file) {
         var hash = crypto.createHash('sha1');
         hash.update(file.name);
         var d = hash.digest('hex');
