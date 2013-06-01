@@ -5,7 +5,7 @@
   , "dependencies": {
       "connect-flash": "0.1.x"
     , "connect-mongo": "0.2.x"
-    , "express": "2.5.8"
+    , "express": "3.0.3"
     , "jade": ">= 0.0.1"
     , "less-middleware": "0.1.x"
     , "mongoose": "3.5.x"
@@ -14,7 +14,7 @@
     , "q": "0.8.x"
     , "underscore": "1.4.x"
   }
-  , "dev-dependencies": {
+  , "devDependencies": {
       "chai": "1.5.x"
     , "sinon": "1.6.x"
     , "sinon-chai": "2.3.x"
