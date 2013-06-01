@@ -4,7 +4,7 @@ module.exports = {
 
   // HTML Render zone
   addPage: function (req, res) {
-    res.render('campaign-add');
+    res.render('campaign-add', { page: 'new-campaign' });
   },
 
   // API zone
