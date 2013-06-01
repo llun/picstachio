@@ -1,32 +1,32 @@
 body {
-  padding-top: 96px;
-
-  & > .container {
-    .campaignname {
-      size: 600pt;
-    }
-  }
+  padding-top: 126px;
 
   .navbar {
     .navbar-inner {
       background: #faf9f7;
-      
-      .container {
-        .nav-collapse {
-         .nav {
-           .active {
-             background-color: rgb(216, 48, 54);
-           }
-         } 
-        }
-        
-      }
     }
+
     .nav {
+
       li {
-        line-height: 20px;
+        height: 50px;
+        line-height: 50px;
+
+        margin-top: 20px;
+        padding: 0 16px;
+
+        a {
+          padding: 0;
+        }
       }
+
+      li.active {
+        background-color: #c0392b;
+        color: white;
+      }
+
     }
+
   }
 
 
