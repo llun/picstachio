@@ -16,12 +16,17 @@ html
             li.active
               a(href='/campaign/add.html')
                 | Create a campaign
-            li
-              a(href='/users/register.html')
-                | Sign up
-            li
-              a(href='/users/login.html')
-                | Login
+            if !user
+              li
+                a(href='/users/register.html')
+                  | Sign up
+              li
+                a(href='/users/login.html')
+                  | Login
+            else
+              li
+                a(href='/users/logout')
+                  | Logout
 
     block content
 

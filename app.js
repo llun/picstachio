@@ -87,9 +87,10 @@ app.get('/', routes.index);
 // Campaign zone
 app.get('/campaign/add.html', security.requiredLogin, campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
-app.get('/campaign/bid.html', security.requiredLogin, campaign.bidPage);
+app.get('/campaign/:id/bid.html', security.requiredLogin, campaign.bidPage);
 
 app.post('/campaign/add', security.requiredLogin, campaign.add);
+app.post('/campaign/:id/bid', security.requiredLogin, campaign.bid);
 
 // User zone
 app.get('/users/login.html', user.loginPage);

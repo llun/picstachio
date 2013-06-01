@@ -11,7 +11,7 @@ block content
       div.control-group
         label.control-label Campaign description
         div.controls
-          textarea(type='text',name='description',placeholder='Description', size='100')
+          textarea(type='text',name='description',placeholder='Enter your photo requirements. Be as specific as possible.')
       div.control-group
         label.control-label Upload sample photos
         div.controls
@@ -19,11 +19,14 @@ block content
       div.control-group
         label.control-label Deadline
         div.controls
-          input(type='text',name='endDate',placeholder='End Date')
+          .input-prepend.input-datepicker
+            button.btn
+              span.fui-calendar
+            input.span2.hasDatepicker(type='text',name='endDate',placeholder=moment().add('days',7).calendar() )
       div.control-group
         label.control-label Budget
         div.controls
-          input(type='text',name='budget',placeholder='Budget')
+          input(type='text',name='budget',placeholder='$0.00')
       div.control-group
         div.controls
           button.btn.btn-success(type='submit')

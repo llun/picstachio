@@ -1,4 +1,5 @@
-var knox = require('knox'),
+var crypto = require('crypto'),
+    knox = require('knox'),
     q = require('q'),
     _ = require('underscore');
 
@@ -8,7 +9,8 @@ var client = knox.createClient({
     bucket: 'picstachio'
   });
 
-var Campaign = require('../models/campaign');
+var Bid = require('../models/bid'),
+    Campaign = require('../models/campaign');
 
 module.exports = {
 
@@ -18,7 +20,15 @@ module.exports = {
   },
 
   bidPage: function (req, res) {
-    res.render('bid');
+    var id = req.params.id;
+    Campaign.findById(id, function (err, campaign) {
+      if (campaign) {
+        res.render('bid', campaign);
+      }
+      else {
+        res.redirect('/');
+      }
+    });
   },
 
   // API zone
@@ -41,9 +51,12 @@ module.exports = {
 
     if (req.files.files.length > 0) {
       var maps = _.map(req.files.files, function (file) {
+        var hash = crypto.createHash('sha1');
+        hash.update(file.name);
+        var d = hash.digest('hex');
         return q.nfcall(client.putFile.bind(client),
                 file.path,
-                '/res/' +  (new Date().getTime()),
+                '/res/' +  (new Date().getTime()) + d,
                 { 'x-amz-acl': 'public-read' });
       });
       q.all(maps)
@@ -78,7 +91,50 @@ module.exports = {
         }
       });
     }
-
+  },
+  
+  bid: function (req, res) {    
+    var input = {
+      campaign: req.params.id,
+      owner: req.user._id,
+      price: req.body.price,
+      images: []
+    }
+    var bid = null;
+    
+    if (req.files.pictures.length > 0) {
+      var maps = _.map(req.files.pictures, function (file) {
+        var hash = crypto.createHash('sha1');
+        hash.update(file.name);
+        var d = hash.digest('hex');
+        return q.nfcall(client.putFile.bind(client),
+                file.path,
+                '/bid/' +  (new Date().getTime()) + d,
+                { 'x-amz-acl': 'public-read' });
+      });
+      q.all(maps)
+        .then(function (out) {
+          input.images = [];
+          _.each(out, function (v) {
+            input.images.push(v.req.url);
+          });
+          bid = new Bid(input);
+          return q.nfcall(bid.save.bind(bid));
+        })
+        .then(function () {
+          res.status(302);
+          res.header('Location', '/');
+          res.json(bid);
+        })
+        .fail(function (err) {
+          res.json(err);
+        })
+        .done();
+    }
+    else {
+      req.flash('error', 'Image is required');
+      res.redirect('/campaign/' + req.param.id + '/bid.html');
+    }
   }
 
 }

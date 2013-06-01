@@ -2,7 +2,22 @@ extends layout
 
 block content
   .container
+    .page-header
+      h3 Submit a bid
     .row
       .span6
-        c
+        h5
+          = name
+        small
+          = description
+        p
+          |  Sample photo
+          if images.length > 0
+            img(src=images[0], width='150', height='150')
+            
       .span6
+        h2 submit bid
+        form(action='/campaign/#{_id}/bid',method='post',enctype='multipart/form-data')
+          input(type='file',name='pictures[]')
+          input(type='text',name='price')
+          button.btn.btn-success(type='submit') Bid
