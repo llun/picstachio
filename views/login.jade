@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .span6.offset4
+    form(action='/users/login',method='post')
+      fieldset
+        legend Login
+        input(type='text', placeholder='Username')
+        input(type='password', placeholder='Password')
+        button.btn.btn-primary(type='submit') Login

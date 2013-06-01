@@ -3,14 +3,18 @@ var express = require('express'),
     path = require('path'),
     less_middleware = require('less-middleware'),
     routes = require('./routes'),
-    campaign = require('./routes/campaign');
+    campaign = require('./routes/campaign'),
+    user = require('./routes/user');
+
+var passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
 
 var flash = require('connect-flash');
-
-var express = require('express')
-  , routes = require('./routes');
-
 var app = express();
+
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+  }));
 
 app.configure('development', function(){
   app.use(express.errorHandler());
@@ -38,6 +42,8 @@ app.configure(function(){
   app.use(app.router);
 });
 
+app.locals.title = 'Picstachio';
+
 app.get('/', routes.index);
 
 // Campaign zone
@@ -45,6 +51,9 @@ app.get('/campaign/add.html', campaign.addPage);
 app.get('/campaign/list.html', campaign.listPage);
 
 app.post('/campaign/add', campaign.add);
+
+// User zone
+app.get('/users/login.html', user.loginPage);
 
 // server codes
 app.listen(app.get('port'), function () {
