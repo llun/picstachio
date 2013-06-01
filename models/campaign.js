@@ -5,7 +5,7 @@ var schema = mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   images: [],
-  endDate: { type: Date, required: true },
+  endDate: { type: Date },
   owner: { type: String, required: true }
 });
 

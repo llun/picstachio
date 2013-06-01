@@ -9,13 +9,17 @@ module.exports = {
 
   // API zone
   add: function (req, res) {
-    console.log (req.body);
+    var input = req.body;
+    input.owner = req.user.id;
+
     var campaign = new Campaign(req.body);
     campaign.save(function (err) {
       if (err) {
         res.json(err);
       }
       else {
+        res.status(302);
+        res.header('Location', '/');
         res.json(campaign);
       }
     });
