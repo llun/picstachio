@@ -1,9 +1,25 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
+    "name": "picstachi"
+  , "version": "1.0.0"
   , "private": true
   , "dependencies": {
-      "express": "2.5.8"
+      "connect-flash": "0.1.x"
+    , "connect-mongo": "0.2.x"
+    , "express": "2.5.8"
     , "jade": ">= 0.0.1"
+    , "less-middleware": "0.1.x"
+    , "mongoose": "3.5.x"
+    , "passport": "0.1.x"
+    , "passport-local": "0.1.x"
+    , "q": "0.8.x"
+    , "underscore": "1.4.x"
+  }
+  , "dev-dependencies": {
+      "chai": "1.5.x"
+    , "sinon": "1.6.x"
+    , "sinon-chai": "2.3.x"
+    , "chai-as-promised": "3.2.x"
+    , "mocha-as-promised": "1.2.x"
+    , "mocha": "1.x"
   }
 }

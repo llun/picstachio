@@ -4,11 +4,30 @@
  */
 
 var express = require('express')
+  , less_middleware = require('less-middleware')
   , routes = require('./routes');
+
+var flash = require('connect-flash')
+  , MongoStore = require('connect-mongo')(express);
+
+var passport = require('passport')
+  , LocalStategy = require('passport-local').Strategy;
 
 var app = module.exports = express.createServer();
 
 // Configuration
+
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  app.use(less_middleware({
+    src: __dirname + '/public',
+    force: true
+  }));
+});
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+});
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -17,14 +36,6 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  app.use(express.errorHandler());
 });
 
 // Routes
