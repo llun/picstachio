@@ -137,8 +137,9 @@ module.exports = {
     }
     var bid = null;
 
-    if (req.files.pictures.length > 0) {
-      var maps = _.map(req.files.pictures, function (file) {
+    var files = _.filter(req.files.pictures, function (file) { return file.size > 0; })
+    if (files.length > 0) {
+      var maps = _.map(files, function (file) {
         var hash = crypto.createHash('sha1');
         hash.update(file.name);
         var d = hash.digest('hex');
