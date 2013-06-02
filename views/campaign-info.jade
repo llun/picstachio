@@ -35,7 +35,7 @@ block content
             bids.length
             |  Bids
           else
-            |  No bids
+            |  No one bid yet.
         - each bid in bids
           #bidsphoto
             if bid.images.length > 0
@@ -47,7 +47,7 @@ block content
               |  Price:
               = bid.price
             p
-              a.btn.btn-large.btn-success.btn-block
+              a.btn.btn-large.btn-success.btn-block(src='/mocks/pay.html')
                 |  Buy
                 i.full-arrow-right.pull-right
 

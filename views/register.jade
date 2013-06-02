@@ -2,24 +2,26 @@ extends layout
 
 block content
   .container
-    .span6.offset3
+    .span12
       form.form-horizontal(action='/users/new',method='post')
         if flash.error && flash.error.length > 0
             .alert.alert-error
               = flash.error[0]
-        legend Register
+        legend
+          h3 Register
         .control-group
-          label.control-label(for='username') Username
+          label.control-label(for='username',style='font-size: 18px;') Username
           .controls
-            input(type='text',name='username',id='username')
+            input.span4(type='text',name='username',id='username')
         .control-group
-          label.control-label(for='password') Password
+          label.control-label(for='password',style='font-size: 18px;') Password
           .controls
-            input(type='password',name='password',id='password')
+            input.span4(type='password',name='password',id='password')
         hr
         .control-group
-          label.control-label(for='email') Email
+          label.control-label(for='email',style='font-size: 18px;') Email
           .controls
-            input(type='text',name='email',id='email')
-        .form-actions
-          button.btn.btn-primary(type='submit') Register
+            input.span4(type='text',name='email',id='email')
+        .control-group
+          .controls
+            button.btn.btn-success.span4(type='submit',style='margin-left: 0;') Register

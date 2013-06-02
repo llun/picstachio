@@ -49,3 +49,8 @@ block content
             td
               a.btn.btn-block.btn-success(href='/campaign/#{campaign._id}/bid.html') Bid
 
+    if !user
+      h3#howitwork How it works
+        img(src='/images/howitworks.png')
+      p
+        a.btn.btn-block.btn-success(href='/users/login.html') Get Started Now!
